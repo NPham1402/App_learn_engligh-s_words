@@ -1,0 +1,13 @@
+C:\Users\09382\source\repos\av3\av3\bin\Debug\av3.exe
+C:\Users\09382\source\repos\av3\av3\bin\Debug\av3.pdb
+C:\Users\09382\source\repos\av3\av3\obj\Debug\av3.csprojAssemblyReference.cache
+C:\Users\09382\source\repos\av3\av3\obj\Debug\av3.Form1.resources
+C:\Users\09382\source\repos\av3\av3\obj\Debug\av3.Properties.Resources.resources
+C:\Users\09382\source\repos\av3\av3\obj\Debug\av3.csproj.GenerateResource.cache
+C:\Users\09382\source\repos\av3\av3\obj\Debug\av3.csproj.CoreCompileInputs.cache
+C:\Users\09382\source\repos\av3\av3\obj\Debug\av3.exe
+C:\Users\09382\source\repos\av3\av3\obj\Debug\av3.pdb
+C:\Users\09382\source\repos\av3\av3\obj\Debug\av3.HOME.resources
+C:\Users\09382\source\repos\av3\av3\bin\Debug\av3.exe.config
+C:\Users\09382\source\repos\av3\av3\obj\Debug\av3.Form10word.resources
+C:\Users\09382\source\repos\av3\av3\obj\Debug\av3.btn_test.resources

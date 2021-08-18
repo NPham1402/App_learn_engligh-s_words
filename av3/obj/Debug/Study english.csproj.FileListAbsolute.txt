@@ -1,0 +1,21 @@
+C:\Users\09382\source\repos\av3\av3\bin\Debug\av3.exe.config
+C:\Users\09382\source\repos\av3\av3\bin\Debug\av3.exe
+C:\Users\09382\source\repos\av3\av3\bin\Debug\av3.pdb
+C:\Users\09382\source\repos\av3\av3\bin\Debug\DocumentFormat.OpenXml.dll
+C:\Users\09382\source\repos\av3\av3\bin\Debug\DocumentFormat.OpenXml.xml
+C:\Users\09382\source\repos\av3\av3\obj\Debug\av3.AboutBox1.resources
+C:\Users\09382\source\repos\av3\av3\obj\Debug\av3.Test.resources
+C:\Users\09382\source\repos\av3\av3\obj\Debug\av3.Form10word.resources
+C:\Users\09382\source\repos\av3\av3\obj\Debug\av3.btn_test.resources
+C:\Users\09382\source\repos\av3\av3\obj\Debug\av3.HOME.resources
+C:\Users\09382\source\repos\av3\av3\obj\Debug\av3.login.resources
+C:\Users\09382\source\repos\av3\av3\obj\Debug\av3.meanu.resources
+C:\Users\09382\source\repos\av3\av3\obj\Debug\av3.notice.resources
+C:\Users\09382\source\repos\av3\av3\obj\Debug\av3.profile.resources
+C:\Users\09382\source\repos\av3\av3\obj\Debug\av3.Properties.Resources.resources
+C:\Users\09382\source\repos\av3\av3\obj\Debug\Study english.csproj.GenerateResource.cache
+C:\Users\09382\source\repos\av3\av3\obj\Debug\Study english.csproj.CoreCompileInputs.cache
+C:\Users\09382\source\repos\av3\av3\obj\Debug\Study english.csproj.CopyComplete
+C:\Users\09382\source\repos\av3\av3\obj\Debug\av3.exe
+C:\Users\09382\source\repos\av3\av3\obj\Debug\av3.pdb
+C:\Users\09382\source\repos\av3\av3\obj\Debug\Study english.csproj.AssemblyReference.cache
