@@ -14,6 +14,7 @@ namespace av3
         public int numberrow = 0;
         int idadd = 0;
         bool checkkinhlup = false;
+        int nguyendeptrai = 2001;
         bool checkshow = false;
         string[] cminsert = new string[10];
         SqlConnection con = new SqlConnection("Data Source=DESKTOP-CB0987P;Initial Catalog=developent;Integrated Security=True");
