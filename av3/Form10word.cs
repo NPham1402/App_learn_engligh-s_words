@@ -14,7 +14,6 @@ namespace av3
         public int numberrow = 0;
         int idadd = 0;
         bool checkkinhlup = false;
-        int nguyendeptrai = 2001;
         bool checkshow = false;
         string[] cminsert = new string[10];
         SqlConnection con = new SqlConnection("Data Source=DESKTOP-CB0987P;Initial Catalog=developent;Integrated Security=True");
@@ -882,7 +881,6 @@ namespace av3
                 cb_date_add.Visible = true;
             }
         }
-
         private void txt_stt_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
@@ -896,7 +894,6 @@ namespace av3
                 e.Handled = true;
             }
         }
-
         private void txtbig_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
