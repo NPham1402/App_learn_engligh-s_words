@@ -14,18 +14,21 @@ namespace av3
 {
     public partial class Test : Form
     {
-       
-        int id =1;
+        List_Word list;
+        int max_id=0;
+        int id =0;
         int dem_dung = 0;
         int dem_sai = 0;
         //int number = 0;
         SqlConnection con2 = new SqlConnection("Data Source=DESKTOP-CB0987P;Initial Catalog=developent;Integrated Security=True");
         string temp;
-        //string temp2;
+        string temp2;
+        string temp3;
         String getdate = System.DateTime.Now.ToString("yyyy-MM-dd");
         public Test()
         {
             InitializeComponent();
+            list = new List_Word(1);
         }
         void select_date_add()
         {
@@ -37,19 +40,39 @@ namespace av3
             while (dr2.Read())
             {
                 string[] words = dr2["The_date_add"].ToString().Split(' ');
+                Console.WriteLine(words[0]);
                 cb_date_add.Items.Add(words[0]);
             }
             con2.Close();
         }
         private void btnnext_Click(object sender, EventArgs e)
         {
-      
+            if (id == max_id)
+            {
+                txtmeaning.Clear();
+                txtWord.Clear();
+                btnnext.Visible = false;
+                btnstart.Visible = true;
+                pb_switch.Visible = true;
+                txtmeaning.ReadOnly = true;
+                txt_tow.ReadOnly = true;
+                btn_history.Visible = true;
+                string caption = "Số câu đúng:" + dem_dung + "  Số câu sai:" + dem_sai;
+                insert_history(dem_dung, dem_sai);
+                btnstart.Text = "❌Stop❌";
+                MessageBox.Show(caption, "Thống kê:");
+                id = 1;
+                dem_dung = 0;
+                dem_sai = 0;
+            }
+            else
+            {
                 update_date();
                 string a = txtmeaning.Text.ToLower();
                 string b = txt_tow.Text.ToLower();
                 if (a == null)
                 {
-                    lblanswer.Text = "Vui lòng nhập đáp án";
+                    MessageBox.Show("Vui lòng điền đáp án", "Lỗi");
                 }
                 else
                 {
@@ -57,23 +80,23 @@ namespace av3
                     {
                         dem_dung++;
                         update_correct(true);
-                        lbl_dapan.Visible = false;
                     }
                     else
                     {
                         dem_sai++;
                         update_correct(false);
-                        lbl_dapan.Visible = true;
-                        lbl_dapan.Text = "Đáp án đúng là:" + temp;
+                        this.dgv_Detail_word.Rows.Add(temp2,temp3,temp);
                     }
-                    lblanswer.Text = "Số câu đúng:" + dem_dung + "   Số câu sai:" + dem_sai +"";
+                    this.dataGridView2.Rows.Add("Số câu đúng:"+dem_dung,"Số câu sai:"+ dem_sai);
                     id++;
-                    teststart(id);
                     txtWord.Clear();
                     txtmeaning.Clear();
                     txt_tow.Clear();
+                    teststart(id);
+
                 }
-            
+
+            }
         }
         void update_correct(bool a)
         {
@@ -115,15 +138,56 @@ namespace av3
         }
         private void btnstart_Click(object sender, EventArgs e)
         {
-            btnnext.Visible = true;
-            btnstop.Visible = true;
-            btnstart.Visible = false;
-            lblanswer.Visible = true;
-            pb_switch.Visible = false;
-            txtmeaning.ReadOnly = false;
-            txt_tow.ReadOnly = false;
-            btn_history.Visible = false;
-            teststart(id);
+            if (btnstart.Text == "✅Start✅")
+            {
+                btnnext.Visible = true;
+                pb_switch.Visible = false;
+                txtmeaning.ReadOnly = false;
+                txt_tow.ReadOnly = false;
+                label6.Visible = true;
+                label7.Visible = true;
+                dataGridView2.Visible = true;
+                lbl_answer.Text = "Statistics";
+                dgv_Detail_word.Visible = true;
+                dataGridView1.Visible = false;
+                btn_history.Visible = false;
+                btnstart.Text = "❌Stop❌";
+                if (cb_between.Checked)
+                {
+                    id =int.Parse(txt_from.Text);
+                    max_id = int.Parse(txt_to.Text);
+                }
+                if (cb_date.Checked)
+                {
+                    id = list.xuat_date_min(cb_date_add.Text);
+                    max_id = list.xuat_date_max(cb_date_add.Text);
+                }
+                teststart(id);
+            }
+            else
+            {
+                DialogResult result = MessageBox.Show("Bạn có muốn dừng bài test", "Cảnh cáo", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                {
+                    txtmeaning.Clear();
+                    txtWord.Clear();
+                    btnnext.Visible = false;
+                    btnstart.Visible = true;
+                    pb_switch.Visible = true;
+                    txtmeaning.ReadOnly = true;
+                    btnstart.Text = "✅Start✅";
+                    txt_tow.ReadOnly = true;
+                    btn_history.Visible = true;
+                    string caption = "Số câu đúng:" + dem_dung + "  Số câu sai:" + dem_sai;
+                    insert_history(dem_dung, dem_sai);
+                    MessageBox.Show(caption, "Thống kê:");
+                    id = 1;
+                    dem_dung = 0;
+                    dem_sai = 0;
+                }
+
+
+            }
         }
         int test_word_stt(string date)
         {
@@ -137,68 +201,25 @@ namespace av3
         }
         private void teststart(int id)
         {
-            string cmtext = "select * from Word_study, History_word where STT = "+id;
-            if (cb_date.Checked==true)
+            if (lbltxt1.Text == "English")
             {
-                cmtext = "select * from Word_study, History_word where STT = History_word.ID and the_date_add='" + cb_date_add.Text + "'";
+                txtWord.Text = "";
+                txtWord.Text = list.xuat_word(id-1);
+                temp2 = txtWord.Text;
+                temp = list.xuat_mean(id-1);
+                temp3 = list.xuat_tow(id-1);
+                temp = temp.ToLower();
             }
-            if (cb_between.Checked == true)
+            else
             {
-                cmtext = "select Word,Type_of_word,Mean from Word_study,history_word where stt=id and stt>=" + txt_from.Text + " and stt<=" + txt_to.Text + "order by STT";
-            }
-            
-            SqlCommand cm = new SqlCommand(cmtext, con2);
-            con2.Open();
-            SqlDataReader dr = cm.ExecuteReader();
-            try
-            {
-                dr.Read();
-                if (lbltxt1.Text=="English")
-                {
-                    txtWord.Text="";
-                    txtWord.Text = (string)dr["Word"];
-                    temp = (string)dr["Mean"];
-                    temp = temp.ToLower();
-                }
-                else
-                {
-                    txtWord.Text = "";
-                    txtWord.Text = (string)dr["Mean"];
-                    temp = (string)dr["Word"];
-                    temp = temp.ToLower();
-                }
-                con2.Close();
-            }
-            catch (Exception a)
-            {
-                MessageBox.Show(a.Message);
+                txtWord.Text = "";
+                txtWord.Text = list.xuat_mean(id-1);
+                temp2 = txtWord.Text;
+                temp3 = list.xuat_tow(id-1);
+                temp = list.xuat_word(id-1);
+                temp = temp.ToLower();
             }
         }
-        private void btnstop_Click(object sender, EventArgs e)
-        {
-            DialogResult result = MessageBox.Show("Bạn có muốn dừng bài test", "Cảnh cáo", MessageBoxButtons.YesNo);
-            if (result == DialogResult.Yes)
-            {
-                txtmeaning.Clear();
-                txtWord.Clear();
-                lblanswer.Visible = false;
-                btnnext.Visible = false;
-                btnstart.Visible = true;
-                btnstop.Visible = false;
-                pb_switch.Visible = true;
-                lbl_dapan.Visible = false;
-                txtmeaning.ReadOnly = true;
-                txt_tow.ReadOnly = true;
-                btn_history.Visible = true;
-                string caption = "Số câu đúng:" + dem_dung + "  Số câu sai:" + dem_sai;
-                insert_history(dem_dung, dem_sai);
-                lblanswer.Text = "Thống kê";
-                MessageBox.Show(caption, "Thống kê:");
-                id = 1;
-                dem_dung = 0;
-                dem_sai = 0;
-            }
-        } 
         private void txt_tow_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)13)
@@ -209,25 +230,40 @@ namespace av3
         }
         private void btn_history_Click(object sender, EventArgs e)
         {
-
-            if (btn_history.Text == "Open History")
+            if (lbl_answer.Text== "Statistics")
             {
-                btn_test a = new btn_test();
-                a.TopLevel = false;
-                a.Dock = DockStyle.Right;
-                a.AutoScroll = false;
-                pn_history.Controls.Add(a);
-                a.Show();
-                btn_history.Text = "Close History";
+                con2.Open();
+                DataSet ds = new DataSet();
+                SqlDataAdapter dsp = new SqlDataAdapter("select * from History_study", con2);
+                dsp.Fill(ds);
+                dataGridView1.DataSource = ds.Tables[0];
+                dataGridView1.Refresh();
+                con2.Close();
+                for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                {
+                    if (i % 2 == 0)
+                    {
+
+                        dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.LightBlue;
+                    }
+                }
+                label6.Visible = false;
+                label7.Visible = false;
+                dataGridView2.Visible = false;
+                dgv_Detail_word.Visible = false;
+                lbl_answer.Text = "History";
+                dataGridView1.Visible = true;
             }
             else
             {
-                btn_history.Text = "Open History";
-                pn_history.Controls.Clear();
-            }
-                
+                label6.Visible = true;
+                label7.Visible = true;
+                dataGridView2.Visible = true;
+                lbl_answer.Text = "Statistics";
+                dgv_Detail_word.Visible = true;
+                dataGridView1.Visible = false;
 
-           
+            }
         }
         void  insert_txt_to()
         {
@@ -242,6 +278,7 @@ namespace av3
         }
         private void Test_Load(object sender, EventArgs e)
         {
+           List_Word list = new List_Word(1);
             select_date_add();
             insert_txt_to();
         }
@@ -271,7 +308,7 @@ namespace av3
                 cb_date_add.Visible = false;
             }
         }
-       private void cb_between_CheckedChanged(object sender, EventArgs e)
+        private void cb_between_CheckedChanged(object sender, EventArgs e)
         {
             if (cb_between.Checked == true)
             {
@@ -282,10 +319,6 @@ namespace av3
             {
                 pn_between.Visible = false;
             }
-        }
-        private void panel2_Paint(object sender, PaintEventArgs e)
-        {
-
         }
         private void cb_speak_CheckedChanged(object sender, EventArgs e)
         {
@@ -299,5 +332,7 @@ namespace av3
 
             }
         }
+
+
     }
 }

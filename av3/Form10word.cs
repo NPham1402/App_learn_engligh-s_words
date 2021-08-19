@@ -882,7 +882,6 @@ namespace av3
                 cb_date_add.Visible = true;
             }
         }
-
         private void txt_stt_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
@@ -896,7 +895,6 @@ namespace av3
                 e.Handled = true;
             }
         }
-
         private void txtbig_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
